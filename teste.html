@@ -1,0 +1,154 @@
+<html>
+<style>
+body{
+    background-image: url(./img/Web\ 1920\ –\ 1.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+div{
+    display: inline-block;
+}
+#div1 .domino {
+  cursor: move;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  border: none;
+  background-color: #0788F3;
+  z-index: 10;
+  position: absolute;
+  color: aliceblue;
+  z-index: 9;
+}
+#texto{
+    width: 90%;
+    height: 75%;
+    margin-left: 14px;
+    background-color: #EAE9EA;
+    border: none;
+    border-radius: 17px;
+}
+.note button{
+    width: 90%;
+    margin-top: 5px;
+    height: 40px;
+    margin-left: 13px;
+    border-radius: 10px;
+    border: none;
+    background-color: #0788F3;
+    color: #ffffff;
+    font-weight: 1000;
+}
+.note{
+    background-color: #ffffff;
+    align-items: center;
+    border-radius: 25px;
+    box-shadow: 3px 6px 15px rgba(0, 0, 0, 0.37);
+    position: absolute;
+}
+h1{
+    margin-top: 10px;
+    font-size: 20px;
+    margin-left: 20px;
+}
+</style>
+<body>
+    <div class="note">
+        <div class="domino">
+            <h1>Anotação</h1>
+            <input id="texto" type="text">
+            <button class="note">Enviar</button>
+        </div>
+    </div>
+    <div id="div1">
+        <button class="btn-add">Cadu add</button>
+        <button src="https://pngimg.com/uploads/dominoes/dominoes_PNG62.png"  class="domino"  height="100px">Bernardo</button>
+        <button class="domino"></button>
+    </div>
+
+<script>
+
+const BtnAdd = document.querySelector(".btn-add");
+const DivContainer = document.getElementById("div1")
+
+BtnAdd.addEventListener("click", AddNew);
+
+function AddNew(){
+    const newBtn = document.createElement("button");
+    newBtn.classList.add('domino');
+    DivContainer.appendChild(newBtn);
+}
+
+
+/*Estou registrando varios elementos*/
+var pecas = document.getElementsByClassName('domino');
+for(var indice=0; indice< pecas.length; indice++ ){
+	dragElement(pecas[indice]);
+}
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  elmnt.onmousedown = dragMouseDown;
+ 
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    /* stop moving when mouse button is released:*/
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+
+div = getElementsByClassName("note")
+
+div.addEventListener('mousedown', function(e) {
+    isDown = true;
+    offset = [
+        div.offsetLeft - e.clientX,
+        div.offsetTop - e.clientY
+    ];
+}, true);
+
+document.addEventListener('mouseup', function() {
+    isDown = false;
+}, true);
+
+document.addEventListener('mousemove', function(event) {
+    event.preventDefault();
+    if (isDown) {
+        mousePosition = {
+
+            x : event.clientX,
+            y : event.clientY
+
+        };
+        div.style.left = (mousePosition.x + offset[0]) + 'px';
+        div.style.top  = (mousePosition.y + offset[1]) + 'px';
+    }
+}, true);
+</script>
+
+</body>
+</html>
